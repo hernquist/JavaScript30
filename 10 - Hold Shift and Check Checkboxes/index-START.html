@@ -99,6 +99,49 @@
   </div>
 
 <script>
+  let boxes = document.querySelectorAll('input');
+  console.log(boxes);
+  let shiftOn = false;
+  let idValue = -1;
+
+  boxes.forEach((box, i) => {
+    box.addEventListener('click', handleClick);
+    box.setAttribute('id', i);
+  });
+
+  function handleClick(e){
+    console.log(e.target.checked);
+    if (shiftOn && idValue === -1) {
+      console.log("target", e.target);
+      console.log("shiftOn:", shiftOn);
+      console.log("id", e.target.id);
+      idValue = e.target.id;
+    } else if (shiftOn && idValue !== -1) {
+      if (e.target.id > idValue) {
+        for (let i=idValue; i<e.target.id; i++) {
+          boxes[i].checked = true;
+        }
+      } else if (e.target.id < idValue) {
+        for (let i=e.target.id; i<idValue; i++) {
+          boxes[i].checked = true;
+        }
+      } else {
+        console.log("same");
+      }
+    }
+  }
+
+  addEventListener("keydown", function(event) {
+    if (event.keyCode == 16)
+      shiftOn = true;
+  });
+
+  addEventListener("keyup", function(event) {
+    if (event.keyCode == 16) {
+      shiftOn = false;
+      idValue = -1;
+    }
+    });
 </script>
 </body>
 </html>

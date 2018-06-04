@@ -15,7 +15,7 @@
     </div>
     <div data-key="83" class="key">
       <kbd>S</kbd>
-      <span class="sound">hihat</span>
+      <span class="sound">seun's hihat</span>
     </div>
     <div data-key="68" class="key">
       <kbd>D</kbd>
@@ -58,7 +58,27 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  window.addEventListener('keyup', function (e){
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+    key.classList.add("playing");
+    if (!audio) return;
+    audio.currentTime = 0;
+    audio.play();
+  });
+  // window.addEventListener('keyup', function (e){
+  //   const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+  //   key.classList.remove("playing");
+  // });
+  function removeTransition(e) {
+    if (e.propertyName !== 'transform') return;
+    console.log(this);
+    this.classList.remove('playing');
+  }
 
+
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition))
 </script>
 
 
